@@ -1,9 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>My First Website</title>
 
     <style>
@@ -11,7 +11,7 @@
             background-color: lightyellow;
             text-align: center;
             font-family: Arial, sans-serif;
-            padding-top: 100px;
+            padding: 60px 15px;
         }
 
         h1 {
@@ -28,18 +28,83 @@
             color: black;
             font-size: 22px;
         }
+
+        .social-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            max-width: 650px;
+            margin: 35px auto;
+        }
+
+        .social-box {
+            padding: 22px 5px;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 8px #0002;
+            transition: transform 0.2s;
+        }
+
+        .social-box:hover {
+            transform: translateY(-4px);
+        }
+
+        .facebook {
+            background-color: #1877F2;
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #feda75, #d62976, #962fbf);
+        }
+
+        .tiktok {
+            background-color: #111111;
+        }
+
+        .messenger {
+            background-color: #0084FF;
+        }
+
+        @media (max-width: 480px) {
+            .social-container {
+                gap: 8px;
+            }
+
+            .social-box {
+                font-size: 14px;
+                padding: 18px 3px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <h1>WELCOME TO MY WEBSITE</h1>
-
     <h2>EASIN ARAFAT NOBIN</h2>
 
     <p>Sena Public School and College</p>
-
     <p>Savar Cantonment Public School and College</p>
+
+    <div class="social-container">
+        <a class="social-box facebook" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
+
+        <a class="social-box instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+
+        <a class="social-box facebook" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
+
+        <a class="social-box tiktok" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok</a>
+
+        <a class="social-box messenger" href="https://www.messenger.com/" target="_blank" rel="noopener noreferrer">Messenger</a>
+    </div>
 
 </body>
 </html>
+```
