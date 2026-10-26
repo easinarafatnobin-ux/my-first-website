@@ -1,273 +1,512 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EASIN ARAFAT NOBIN | PERSONAL WEBSITE</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#152b43">
+<meta name="description" content="The personal website of Easin Arafat Nobin.">
+<title>Easin Arafat Nobin | Personal Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root { --text:#172033; --panel:rgba(255,255,255,.88); --accent:#2764c5; }
-  * { box-sizing:border-box; }
-  body {
-    margin:0; font-family:Arial, Helvetica, sans-serif; color:var(--text);
-    background:linear-gradient(135deg,#eaf4ff,#f8fbff); min-height:100vh;
-    transition:background .5s ease,color .5s ease;
-  }
-  button, input, textarea { font:inherit; }
-  .page { width:min(1100px,94%); margin:0 auto; padding:26px 0 38px; }
-  .hero {
-    text-align:center; padding:32px 18px; border-radius:24px;
-    background:rgba(255,255,255,.82); box-shadow:0 12px 35px rgba(20,50,90,.12);
-    border:1px solid rgba(255,255,255,.9);
-  }
-  .eyebrow { font-size:13px; letter-spacing:3px; font-weight:800; opacity:.7; }
-  h1 { margin:12px 0; font-size:clamp(27px,5vw,46px); line-height:1.15; }
-  .clock { font-size:clamp(29px,6vw,48px); font-weight:800; letter-spacing:1px; margin:14px 0 6px; }
-  .date { font-size:clamp(16px,2.5vw,21px); font-weight:700; }
-  .intro { margin:15px auto 0; max-width:700px; line-height:1.7; }
-  .choose-title { text-align:center; margin:32px 0 16px; font-size:clamp(21px,3vw,29px); }
-  .choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
-  .choice {
-    border:0; border-radius:20px; padding:24px 12px; min-height:155px; cursor:pointer;
-    background:var(--panel); color:var(--text); box-shadow:0 8px 25px rgba(20,50,90,.1);
-    transition:transform .2s,box-shadow .2s; border:2px solid transparent;
-  }
-  .choice:hover { transform:translateY(-4px); box-shadow:0 13px 28px rgba(20,50,90,.16); }
-  .choice.active { border-color:var(--accent); transform:translateY(-3px); }
-  .choice .icon { display:block; font-size:44px; margin-bottom:10px; }
-  .choice strong { display:block; font-size:20px; letter-spacing:1px; }
-  .choice small { display:block; margin-top:8px; font-size:13px; opacity:.75; }
-  .panel {
-    display:none; margin-top:24px; padding:clamp(20px,4vw,34px); border-radius:24px;
-    background:var(--panel); box-shadow:0 12px 35px rgba(20,50,90,.12);
-  }
-  .panel.show { display:block; animation:appear .35s ease; }
-  @keyframes appear { from {opacity:0; transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
-  .panel h2 { margin:0 0 10px; font-size:clamp(24px,4vw,34px); }
-  .panel-lead { line-height:1.7; margin:0 0 22px; }
-  .profile-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .info { background:rgba(120,150,190,.10); padding:15px; border-radius:14px; }
-  .info span { display:block; font-size:12px; font-weight:800; letter-spacing:1px; opacity:.65; margin-bottom:7px; }
-  .info strong { overflow-wrap:anywhere; line-height:1.5; }
-  .social-title { margin:28px 0 14px; }
-  .social-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-  .social {
-    display:flex; align-items:center; justify-content:center; gap:10px; min-height:70px;
-    padding:12px; border-radius:14px; text-decoration:none; color:inherit;
-    background:rgba(120,150,190,.12); font-weight:800; border:1px solid rgba(100,130,170,.15);
-    transition:transform .2s,background .2s;
-  }
-  .social:hover { transform:translateY(-3px); background:rgba(120,150,190,.22); }
-  .social .sicon { font-size:25px; }
-  .form-wrap { margin-top:28px; padding-top:22px; border-top:1px solid rgba(100,130,170,.25); }
-  .form-wrap h3 { margin-top:0; }
-  .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-  label { display:block; font-size:14px; font-weight:700; margin-bottom:7px; }
-  input, textarea {
-    width:100%; padding:12px 13px; border:1px solid #c8d3e2; border-radius:10px;
-    background:#fff; color:#172033; outline:none;
-  }
-  input:focus, textarea:focus { border-color:#2764c5; box-shadow:0 0 0 3px rgba(39,100,197,.12); }
-  textarea { min-height:100px; resize:vertical; }
-  .full { grid-column:1/-1; }
-  .save-btn { border:0; border-radius:11px; padding:13px 20px; background:var(--accent); color:#fff; font-weight:800; cursor:pointer; margin-top:12px; }
-  .save-status { min-height:20px; font-size:14px; font-weight:700; }
-  footer { text-align:center; padding:28px 12px 5px; font-weight:800; letter-spacing:1px; font-size:13px; opacity:.75; }
-  /* Theme changes when the visitor selects a period */
-  body.theme-morning { background:linear-gradient(135deg,#fff,#e7f5ff 65%,#d9ebff); }
-  body.theme-afternoon { background:linear-gradient(135deg,#ffe0b2,#ffbd80 50%,#fff0d9); }
-  body.theme-night { background:radial-gradient(ellipse at top,#293f78 0%,#121a38 55%,#090e20 100%); color:#f4f7ff; }
-  body.theme-night .hero, body.theme-night .panel, body.theme-night .choice { background:rgba(23,31,62,.88); color:#f4f7ff; border-color:rgba(255,255,255,.08); }
-  body.theme-night .choice.active { border-color:#9bbcff; }
-  body.theme-night .info, body.theme-night .social { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.12); }
-  body.theme-night input, body.theme-night textarea { background:#f8faff; color:#172033; }
-  @media (max-width:650px) {
-    .choices { gap:8px; }
-    .choice { min-height:130px; padding:17px 5px; }
-    .choice .icon { font-size:34px; }
-    .choice strong { font-size:15px; }
-    .choice small { font-size:11px; }
-    .profile-grid, .form-grid { grid-template-columns:1fr; }
-    .social-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  }
+:root {
+  --ink: #172b3b;
+  --glass: rgba(255,255,255,.17);
+  --line: rgba(255,255,255,.42);
+  --shadow: 0 22px 65px rgba(8,24,39,.22);
+  --bg-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=3840&q=100');
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: white;
+  min-height: 100vh;
+  background: #142b3b;
+  overflow-x: hidden;
+}
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.025);
+  transition: background-image .65s ease, filter .65s ease;
+}
+body:after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(130deg,rgba(12,31,48,.30),rgba(12,31,48,.08) 55%,rgba(7,18,32,.38));
+  backdrop-filter: blur(1.2px);
+  pointer-events: none;
+}
+body[data-period="morning"] {
+  --bg-image: url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=3840&q=100');
+}
+body[data-period="afternoon"] {
+  --bg-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=3840&q=100');
+}
+body[data-period="evening"] {
+  --bg-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=3840&q=100');
+}
+body[data-period="night"] {
+  --bg-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?auto=format&fit=crop&w=3840&q=100');
+}
+.page { width: min(1120px,92%); margin: auto; padding: 34px 0 30px; }
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(19px) saturate(135%);
+  -webkit-backdrop-filter: blur(19px) saturate(135%);
+  border-radius: 28px;
+}
+.hero { text-align: center; padding: clamp(28px,5vw,58px) 18px 36px; }
+.eyebrow {
+  letter-spacing: .08em;
+  font-size: clamp(2rem,6vw,4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 3px 18px rgba(4,18,30,.9);
+  line-height: 1.2;
+}
+.hero h1 {
+  font-family: 'Playfair Display',serif;
+  font-size: clamp(2rem,5.8vw,4.2rem);
+  line-height: 1.12;
+  margin: 16px 0 12px;
+  text-shadow: 0 6px 25px #102b3b;
+}
+.clock {
+  font-size: clamp(2.7rem,8vw,5.2rem);
+  font-weight: 800;
+  letter-spacing: .04em;
+  line-height: 1.05;
+  text-shadow: 0 6px 25px #102b3b;
+}
+.weekday {
+  font-family: 'Playfair Display',serif;
+  font-style: italic;
+  font-size: clamp(1.3rem,3vw,2rem);
+  margin-top: 9px;
+}
+.date { font-weight: 800; letter-spacing: .17em; font-size: clamp(.8rem,2vw,1.05rem); margin-top: 8px; }
+.section-title {
+  text-align: center;
+  font-family: 'Playfair Display',serif;
+  font-size: clamp(1.65rem,3.6vw,2.5rem);
+  margin: 42px 0 18px;
+  text-shadow: 0 4px 18px #122b3b;
+}
+.periods { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
+.period-btn {
+  color: #fff;
+  min-height: 120px;
+  padding: 18px 10px;
+  cursor: pointer;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.48);
+  background: rgba(255,255,255,.13);
+  box-shadow: 0 12px 28px rgba(6,20,35,.15),inset 0 1px 0 rgba(255,255,255,.28);
+  backdrop-filter: blur(16px);
+  transition: transform .25s,background .25s,border-color .25s;
+}
+.period-btn:hover,.period-btn.active { transform: translateY(-4px); background: rgba(255,255,255,.28); border-color: #fff; }
+.period-btn .icon { display: block; font-size: 2rem; margin-bottom: 9px; }
+.period-btn strong { display: block; letter-spacing: .08em; font-size: .94rem; }
+.period-btn small { display: block; margin-top: 7px; font-size: .72rem; opacity: .88; }
+.profile-entry {
+  margin-top: 18px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.profile-entry h2 { font-family: 'Playfair Display',serif; margin: 0 0 7px; font-size: 1.65rem; }
+.profile-entry p { margin: 0; line-height: 1.6; color: #f0f7fb; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: white;
+  font: 700 .92rem 'DM Sans',sans-serif;
+  padding: 13px 19px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,.58);
+  background: rgba(255,255,255,.16);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: transform .2s,background .2s;
+}
+.btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.28); }
+.btn.primary { background: rgba(15,42,63,.55); }
+.panel { margin-top: 22px; padding: clamp(22px,4vw,38px); display: none; animation: rise .35s ease; }
+.panel.show { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.panel-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; flex-wrap: wrap; }
+.panel h2,.panel h3 { font-family: 'Playfair Display',serif; margin: 0 0 10px; }
+.panel h2 { font-size: clamp(1.8rem,4vw,2.6rem); }
+.panel p { line-height: 1.75; }
+.muted { color: #f0f6fa; }
+.profile-grid,.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; margin-top: 22px; }
+.info,.skill { padding: 18px; border: 1px solid rgba(255,255,255,.24); border-radius: 18px; background: rgba(255,255,255,.10); }
+.info span { display: block; font-size: .73rem; letter-spacing: .13em; font-weight: 800; opacity: .82; margin-bottom: 8px; }
+.info strong { line-height: 1.6; overflow-wrap: anywhere; }
+.skill { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.skill .sicon { font-size: 1.5rem; }
+.subhead { margin-top: 34px!important; }
+.social-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.social {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 62px; padding: 13px; border-radius: 16px; text-decoration: none;
+  color: #fff; background: rgba(255,255,255,.13);
+  border: 1px solid rgba(255,255,255,.32); font-weight: 800;
+  letter-spacing: .04em; transition: transform .2s,background .2s;
+}
+.social:hover { transform: translateY(-3px); background: rgba(255,255,255,.27); }
+.social .sicon { font-size: 1.3rem; }
+.social.youtube,.social.email { grid-column: 1/-1; }
+.visit-card { text-align: center; padding: 28px 18px; }
+.visit-card h2 { font-family: 'Playfair Display',serif; font-size: clamp(1.7rem,4vw,2.5rem); margin: 0 0 8px; }
+.visit-card p { margin: 8px 0; line-height: 1.7; }
+.form { margin-top: 18px; }
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px; }
+label { display: block; font-weight: 700; font-size: .88rem; margin-bottom: 7px; }
+input,select,textarea {
+  width: 100%; padding: 13px 14px; border: 1px solid rgba(255,255,255,.42);
+  border-radius: 12px; background: rgba(255,255,255,.91); color: #172b3b;
+  font: 500 .95rem 'DM Sans',sans-serif;
+}
+textarea { min-height: 110px; resize: vertical; }
+.full { grid-column: 1/-1; }
+.form-note { font-size: .82rem; color: #f0f6fa; }
+.status { min-height: 24px; font-weight: 700; }
+.business { margin-top: 22px; padding: 26px; text-align: center; }
+.business h2 { font-family: 'Playfair Display',serif; font-size: 1.8rem; margin: 0 0 8px; }
+.business p { line-height: 1.7; }
+.business .btn { margin: 5px; }
+.footer { text-align: center; margin: 35px 0 8px; padding: 26px 16px; font-weight: 800; letter-spacing: .03em; line-height: 1.7; }
+.footer small { display: block; font-weight: 500; letter-spacing: 0; opacity: .85; margin-top: 9px; }
+.hidden { display: none!important; }
+
+body[data-period="afternoon"] .page,
+body[data-period="afternoon"] .page * { color: #000!important; text-shadow: none!important; }
+body[data-period="afternoon"] .glass,
+body[data-period="afternoon"] .period-btn,
+body[data-period="afternoon"] .btn,
+body[data-period="afternoon"] .social { border-color: rgba(0,0,0,.25); }
+body[data-period="afternoon"] .btn.primary { background: rgba(255,255,255,.48); }
+body[data-period="afternoon"] .period-btn:hover,
+body[data-period="afternoon"] .period-btn.active { background: rgba(255,255,255,.48); border-color: #000; }
+
+@media(max-width:680px) {
+  .page { width: 93%; padding-top: 16px; }
+  .periods { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .period-btn { min-height: 108px; }
+  .profile-grid,.skill-grid,.form-grid { grid-template-columns: 1fr; }
+  .social-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .profile-entry { padding: 20px; }
+  .panel { border-radius: 22px; }
+  .hero { border-radius: 24px; }
+  .full { grid-column: auto; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after { scroll-behavior: auto!important; transition: none!important; animation: none!important; }
+}
 </style>
 </head>
-<body class="theme-morning">
+
+<body data-period="morning">
 <div class="page">
-  <header class="hero">
-    <div class="eyebrow">WELCOME TO MY PERSONAL SPACE</div>
-    <h1>EASIN ARAFAT NOBIN</h1>
-    <div class="clock" id="clock">00:00:00 AM</div>
-    <div class="date" id="date">LOADING DATE...</div>
-    <p class="intro">CHECK THE CURRENT TIME AND CHOOSE A PERIOD BELOW. EACH OPTION OPENS ITS OWN DESIGN AND PERSONAL INFORMATION FORM.</p>
-  </header>
 
-  <h2 class="choose-title">CHOOSE A TIME PERIOD</h2>
-  <section class="choices" aria-label="Choose a time period">
-    <button class="choice active" type="button" data-period="morning" onclick="selectPeriod('morning')">
-      <span class="icon">☀️</span><strong>MORNING</strong><small>6:00 AM – 11:59 AM</small>
-    </button>
-    <button class="choice" type="button" data-period="afternoon" onclick="selectPeriod('afternoon')">
-      <span class="icon">🌇</span><strong>AFTERNOON</strong><small>12:00 PM – 5:59 PM</small>
-    </button>
-    <button class="choice" type="button" data-period="night" onclick="selectPeriod('night')">
-      <span class="icon">🌙</span><strong>NIGHT</strong><small>6:00 PM – 5:59 AM</small>
-    </button>
-  </section>
+<header class="hero glass">
+  <div class="eyebrow">Welcome to my website</div>
+  <h1>Easin Arafat Nobin</h1>
+  <div class="clock" id="clock">--:--:--</div>
+  <div class="weekday" id="weekday">Loading day…</div>
+  <div class="date" id="date">LOADING DATE</div>
+</header>
 
-  <main>
-    <section class="panel show" id="morning-panel">
-      <h2>☀️ GOOD MORNING!</h2>
-      <p class="panel-lead">A FRESH START, A BRIGHT MIND, AND A NEW OPPORTUNITY TO LEARN SOMETHING GREAT.</p>
-      <div class="profile-grid">
-        <div class="info"><span>MY NAME</span><strong>EASIN ARAFAT NOBIN</strong></div>
-        <div class="info"><span>SCHOOL</span><strong>SENA PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>COLLEGE</span><strong>SAVAR CANTONMENT PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>MY GOAL</span><strong>LEARNING, CREATIVITY, AND WEB DEVELOPMENT</strong></div>
-      </div>
-      <h3 class="social-title">MY SOCIAL MEDIA</h3>
-      <div class="social-grid">
-        <a class="social" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📘</span> FACEBOOK</a>
-        <a class="social" href="https://x.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">𝕏</span> TWITTER (X)</a>
-        <a class="social" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">▶️</span> YOUTUBE</a>
-        <a class="social" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">🎵</span> TIKTOK</a>
-        <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📸</span> INSTAGRAM</a>
-        <a class="social" href="https://www.messenger.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">💬</span> MESSENGER</a>
-      </div>
-      <div class="form-wrap">
-        <h3>MORNING PERSONAL FORM</h3>
-        <p>WRITE YOUR MORNING PLAN OR ANY INFORMATION YOU WANT TO SAVE ON THIS DEVICE.</p>
-        <form onsubmit="saveForm(event,'morning')">
-          <div class="form-grid">
-            <div><label for="morning-name">YOUR NAME</label><input id="morning-name" name="name" placeholder="ENTER YOUR NAME"></div>
-            <div><label for="morning-mood">HOW IS YOUR MORNING?</label><input id="morning-mood" name="mood" placeholder="E.G. READY TO LEARN"></div>
-            <div class="full"><label for="morning-plan">TODAY'S PLAN</label><textarea id="morning-plan" name="plan" placeholder="WRITE YOUR PLAN HERE"></textarea></div>
-          </div>
-          <button class="save-btn" type="submit">SAVE MORNING FORM</button>
-          <p class="save-status" id="morning-status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
+<section aria-label="Choose a time-of-day background">
+  <div class="periods" role="group" aria-label="Choose background time">
+    <button class="period-btn active" data-period="morning"><span class="icon">🌅</span><strong>Morning</strong><small>Fresh beginnings</small></button>
+    <button class="period-btn" data-period="afternoon"><span class="icon">☀️</span><strong>Afternoon</strong><small>Bright and clear</small></button>
+    <button class="period-btn" data-period="evening"><span class="icon">🌇</span><strong>Evening</strong><small>Golden-hour calm</small></button>
+    <button class="period-btn" data-period="night"><span class="icon">🌙</span><strong>Night</strong><small>Quiet and peaceful</small></button>
+  </div>
 
-    <section class="panel" id="afternoon-panel">
-      <h2>🌇 GOOD AFTERNOON!</h2>
-      <p class="panel-lead">TAKE A BREATH, REVIEW YOUR PROGRESS, AND KEEP MOVING TOWARD YOUR GOALS.</p>
-      <div class="profile-grid">
-        <div class="info"><span>MY NAME</span><strong>EASIN ARAFAT NOBIN</strong></div>
-        <div class="info"><span>SCHOOL</span><strong>SENA PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>COLLEGE</span><strong>SAVAR CANTONMENT PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>MY GOAL</span><strong>LEARNING, CREATIVITY, AND WEB DEVELOPMENT</strong></div>
-      </div>
-      <h3 class="social-title">MY SOCIAL MEDIA</h3>
-      <div class="social-grid">
-        <a class="social" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📘</span> FACEBOOK</a>
-        <a class="social" href="https://x.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">𝕏</span> TWITTER (X)</a>
-        <a class="social" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">▶️</span> YOUTUBE</a>
-        <a class="social" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">🎵</span> TIKTOK</a>
-        <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📸</span> INSTAGRAM</a>
-        <a class="social" href="https://www.messenger.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">💬</span> MESSENGER</a>
-      </div>
-      <div class="form-wrap">
-        <h3>AFTERNOON PERSONAL FORM</h3>
-        <p>RECORD WHAT YOU HAVE DONE OR WHAT YOU WANT TO DO THIS AFTERNOON.</p>
-        <form onsubmit="saveForm(event,'afternoon')">
-          <div class="form-grid">
-            <div><label for="afternoon-name">YOUR NAME</label><input id="afternoon-name" name="name" placeholder="ENTER YOUR NAME"></div>
-            <div><label for="afternoon-progress">TODAY'S PROGRESS</label><input id="afternoon-progress" name="progress" placeholder="WHAT HAVE YOU COMPLETED?"></div>
-            <div class="full"><label for="afternoon-plan">AFTERNOON PLAN</label><textarea id="afternoon-plan" name="plan" placeholder="WRITE YOUR PLAN HERE"></textarea></div>
-          </div>
-          <button class="save-btn" type="submit">SAVE AFTERNOON FORM</button>
-          <p class="save-status" id="afternoon-status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
+  <div class="profile-entry glass">
+    <div>
+      <h2>Profile Information</h2>
+      <p>My profile details are shown below. Use the business option to open the professional contact interface.</p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="open-business">💼 Business / Professional ↗</button>
+    </div>
+  </div>
+</section>
 
-    <section class="panel" id="night-panel">
-      <h2>🌙 GOOD NIGHT!</h2>
-      <p class="panel-lead">SLOW DOWN, REFLECT ON YOUR DAY, AND PREPARE FOR A PEACEFUL NEW START TOMORROW.</p>
-      <div class="profile-grid">
-        <div class="info"><span>MY NAME</span><strong>EASIN ARAFAT NOBIN</strong></div>
-        <div class="info"><span>SCHOOL</span><strong>SENA PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>COLLEGE</span><strong>SAVAR CANTONMENT PUBLIC SCHOOL AND COLLEGE</strong></div>
-        <div class="info"><span>MY GOAL</span><strong>LEARNING, CREATIVITY, AND WEB DEVELOPMENT</strong></div>
+<section class="panel glass show" id="profile-panel">
+  <div class="panel-head">
+    <div>
+      <h2>My Profile</h2>
+      <p class="muted">Welcome to my personal profile.</p>
+    </div>
+  </div>
+  <div class="profile-grid">
+    <div class="info"><span>FULL NAME</span><strong>Easin Arafat Nobin</strong></div>
+    <div class="info"><span>POSITION</span><strong>Web Developer &amp; Designer</strong></div>
+    <div class="info"><span>EDUCATION</span><strong>HSC First Year — Science</strong></div>
+    <div class="info"><span>SCHOOL &amp; COLLEGE</span><strong>Sene Public School and College</strong></div>
+    <div class="info"><span>LOCATION</span><strong>Savar, Dhaka, Bangladesh</strong></div>
+  </div>
+  <div class="actions" style="margin-top:22px">
+    <button class="btn" id="profile-business">💼 Business / Professional</button>
+    <a class="btn" href="mailto:easinarafatnobin@gmail.com">✉ Contact Me</a>
+  </div>
+</section>
+
+<section class="panel glass" id="business-panel">
+  <div class="panel-head">
+    <div>
+      <h2>Business / Professional</h2>
+      <p class="muted">For companies, industry professionals, collaborations, and project opportunities.</p>
+    </div>
+    <button class="btn" data-close="business-panel">✕ Close</button>
+  </div>
+  <div class="info">
+    <span>PROFESSIONAL CONTACT EMAIL</span>
+    <strong>easinarafatnobin@gmail.com</strong>
+  </div>
+  <p class="muted">For professional inquiries, project discussions, or collaboration proposals, please use the email button below.</p>
+  <a class="btn primary" href="mailto:easinarafatnobin@gmail.com?subject=Business%20or%20Professional%20Inquiry">✉ Email for Business Inquiries</a>
+</section>
+
+<section>
+  <h2 class="section-title">Current Activities &amp; Skills</h2>
+  <div class="skill-grid">
+    <div class="skill glass"><span class="sicon">🎓</span>HSC First Year Student</div>
+    <div class="skill glass"><span class="sicon">💻</span>Web Development</div>
+    <div class="skill glass"><span class="sicon">🎨</span>Web Design</div>
+    <div class="skill glass"><span class="sicon">🤖</span>Artificial Intelligence (AI)</div>
+    <div class="skill glass"><span class="sicon">🚀</span>Freelancing Skills</div>
+    <div class="skill glass"><span class="sicon">📷</span>Photography</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Find Me on Social Media</h2>
+  <div class="social-grid">
+    <a class="social youtube" href="https://www.youtube.com/channel/UC3JZ8l1McxdjTlYLFBgOq7A" target="_blank" rel="noopener noreferrer"><span class="sicon">▶️</span>YouTube</a>
+    <a class="social" href="https://www.facebook.com/share/1GFWyCmwfA/" target="_blank" rel="noopener noreferrer"><span class="sicon">📘</span>Facebook</a>
+    <a class="social" href="https://www.tiktok.com/@easin.arafat.nobin" target="_blank" rel="noopener noreferrer"><span class="sicon">♪</span>TikTok</a>
+    <a class="social" href="https://www.instagram.com/_nobin_official_/" target="_blank" rel="noopener noreferrer"><span class="sicon">📸</span>Instagram</a>
+    <a class="social" href="https://www.threads.com/@_nobin_official_" target="_blank" rel="noopener noreferrer"><span class="sicon">＠</span>Threads</a>
+    <a class="social email" href="mailto:easinarafatnobin@gmail.com"><span class="sicon">✉️</span>Email Me</a>
+  </div>
+</section>
+
+<section class="visit-card glass">
+  <h2>Welcome Back!</h2>
+  <p id="visit-message">Thank you for visiting my website.</p>
+  <p class="muted" id="visit-detail">Your visit history is saved only in this browser on this device.</p>
+</section>
+
+<section class="panel glass show" id="visitor-form-panel">
+  <h2>Visitor Information Form</h2>
+  <p class="muted">You can share a little information and leave a message. Submitted information will be sent to the website owner.</p>
+
+  <form class="form" id="visitor-form" action="https://formsubmit.co/easinarafatnobin2@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="New Visitor Information — Easin Arafat Nobin Website">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="true">
+    <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
+
+    <div class="form-grid">
+      <div><label for="visitor-name">Your Name *</label><input id="visitor-name" name="Name" autocomplete="name" required maxlength="100" placeholder="Enter your name"></div>
+      <div><label for="visitor-age">Your Age</label><input id="visitor-age" name="Age" type="number" min="1" max="120" placeholder="Enter your age"></div>
+      <div><label for="visitor-country">Country</label><input id="visitor-country" name="Country" autocomplete="country-name" maxlength="100" placeholder="Your country"></div>
+      <div><label for="visitor-region">Region / City</label><input id="visitor-region" name="Region or City" maxlength="120" placeholder="Your region or city"></div>
+
+      <div class="full">
+        <label for="occupation">Occupation</label>
+        <select id="occupation" name="Occupation">
+          <option value="">Choose an option</option>
+          <option>Student</option>
+          <option>Employed / Job</option>
+          <option>Business Owner</option>
+          <option>Unemployed / No Job</option>
+          <option>Other</option>
+        </select>
       </div>
-      <h3 class="social-title">MY SOCIAL MEDIA</h3>
-      <div class="social-grid">
-        <a class="social" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📘</span> FACEBOOK</a>
-        <a class="social" href="https://x.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">𝕏</span> TWITTER (X)</a>
-        <a class="social" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">▶️</span> YOUTUBE</a>
-        <a class="social" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">🎵</span> TIKTOK</a>
-        <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">📸</span> INSTAGRAM</a>
-        <a class="social" href="https://www.messenger.com/" target="_blank" rel="noopener noreferrer"><span class="sicon">💬</span> MESSENGER</a>
+
+      <div id="study-field" class="full hidden"><label for="study">What are you studying?</label><input id="study" name="What are you studying?" maxlength="150" placeholder="Your subject or course"></div>
+      <div id="job-field" class="full hidden"><label for="job">What is your job / professional field?</label><input id="job" name="Job or Professional Field" maxlength="150" placeholder="Your job or field"></div>
+      <div id="business-field" class="full hidden"><label for="business-type">What type of business do you run?</label><input id="business-type" name="Business Type" maxlength="150" placeholder="Your business type"></div>
+      <div class="full"><label for="comments">Comments / Message</label><textarea id="comments" name="Comments or Message" maxlength="1500" placeholder="Write your message here (optional)"></textarea></div>
+
+      <div class="full">
+        <button class="btn primary" type="submit">Send Visitor Information ↗</button>
+        <p class="form-note">Please share only information you are comfortable providing. Your information will be sent to the website owner's visitor-information email. The first submission may require email confirmation by the owner.</p>
+        <p class="status" id="form-status" aria-live="polite"></p>
       </div>
-      <div class="form-wrap">
-        <h3>NIGHT REFLECTION FORM</h3>
-        <p>REFLECT ON YOUR DAY AND WRITE DOWN WHAT YOU WANT TO REMEMBER.</p>
-        <form onsubmit="saveForm(event,'night')">
-          <div class="form-grid">
-            <div><label for="night-name">YOUR NAME</label><input id="night-name" name="name" placeholder="ENTER YOUR NAME"></div>
-            <div><label for="night-rating">HOW WAS YOUR DAY?</label><input id="night-rating" name="rating" placeholder="E.G. PRODUCTIVE"></div>
-            <div class="full"><label for="night-reflection">MY DAILY REFLECTION</label><textarea id="night-reflection" name="reflection" placeholder="WHAT DID YOU LEARN TODAY?"></textarea></div>
-          </div>
-          <button class="save-btn" type="submit">SAVE NIGHT FORM</button>
-          <p class="save-status" id="night-status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-  </main>
-  <footer>THANK YOU FOR VISITING MY WEBSITE</footer>
+    </div>
+  </form>
+</section>
+
+<section class="business glass">
+  <h2>Contact Me</h2>
+  <p>For a direct message or professional opportunity, contact me through my main email address.</p>
+  <a class="btn primary" href="mailto:easinarafatnobin@gmail.com?subject=Message%20from%20Your%20Website">✉ Send Me a Message</a>
+  <a class="btn" href="mailto:easinarafatnobin@gmail.com?subject=Business%20or%20Professional%20Inquiry">💼 Business Inquiry</a>
+</section>
+
+<footer class="footer glass">
+  Thank You So Much for Visiting My Website!
+  <small>Made with care by Easin Arafat Nobin</small>
+</footer>
+
 </div>
 
 <script>
-  const dhakaFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit',
-    hour12: true
-  });
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Dhaka', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').textContent = dhakaFormatter.format(now).toUpperCase();
-    document.getElementById('date').textContent = dateFormatter.format(now).toUpperCase();
-  }
-  function selectPeriod(period) {
-    document.body.classList.remove('theme-morning','theme-afternoon','theme-night');
-    document.body.classList.add('theme-' + period);
-    document.querySelectorAll('.choice').forEach(button => {
-      button.classList.toggle('active', button.dataset.period === period);
-      button.setAttribute('aria-pressed', button.dataset.period === period ? 'true' : 'false');
+const periods = ['morning','afternoon','evening','night'];
+
+function periodForHour(hour) {
+  if (hour >= 6 && hour < 12) return 'morning';
+  if (hour >= 12 && hour < 18) return 'afternoon';
+  if (hour >= 18 && hour < 21) return 'evening';
+  return 'night';
+}
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     });
-    document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('show'));
-    document.getElementById(period + '-panel').classList.add('show');
-    document.getElementById(period + '-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+  document.getElementById('weekday').textContent =
+    now.toLocaleDateString(undefined, { weekday: 'long' });
+  document.getElementById('date').textContent =
+    now.toLocaleDateString(undefined, {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    }).toUpperCase();
+}
+
+function selectPeriod(period) {
+  if (!periods.includes(period)) return;
+  document.body.dataset.period = period;
+  document.querySelectorAll('.period-btn').forEach(button => {
+    button.classList.toggle('active', button.dataset.period === period);
+  });
+  try {
+    localStorage.setItem('nobin-selected-period', period);
+  } catch (error) {}
+}
+
+document.querySelectorAll('.period-btn').forEach(button => {
+  button.addEventListener('click', () => selectPeriod(button.dataset.period));
+});
+
+function showPanel(id) {
+  if (id === 'business-panel') {
+    document.getElementById(id).classList.add('show');
+    document.getElementById(id).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
-  function saveForm(event, period) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = {};
-    new FormData(form).forEach((value, key) => data[key] = value);
-    try {
-      localStorage.setItem('easin-website-' + period, JSON.stringify(data));
-      document.getElementById(period + '-status').textContent = 'SAVED ON THIS DEVICE.';
-    } catch (error) {
-      document.getElementById(period + '-status').textContent = 'COULD NOT SAVE IN THIS BROWSER.';
+}
+
+document.getElementById('open-business').addEventListener('click', () => showPanel('business-panel'));
+document.getElementById('profile-business').addEventListener('click', () => showPanel('business-panel'));
+
+document.querySelectorAll('[data-close]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (button.dataset.close === 'business-panel') {
+      document.getElementById(button.dataset.close).classList.remove('show');
     }
-  }
-  function loadSavedForms() {
-    ['morning','afternoon','night'].forEach(period => {
-      try {
-        const saved = JSON.parse(localStorage.getItem('easin-website-' + period) || '{}');
-        const form = document.querySelector('#' + period + '-panel form');
-        Object.entries(saved).forEach(([key,value]) => {
-          const field = form.elements.namedItem(key);
-          if (field) field.value = value;
-        });
-      } catch (error) {}
-    });
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
-  loadSavedForms();
+  });
+});
+
+updateClock();
+setInterval(updateClock, 1000);
+
+try {
+  const saved = localStorage.getItem('nobin-selected-period');
+  selectPeriod(saved && periods.includes(saved) ? saved : periodForHour(new Date().getHours()));
+} catch (error) {
+  selectPeriod(periodForHour(new Date().getHours()));
+}
+
+const visitKey = 'nobin-last-visit-v1';
+let previous = null;
+
+try {
+  previous = localStorage.getItem(visitKey);
+  localStorage.setItem(visitKey, new Date().toISOString());
+} catch (error) {}
+
+const visitMessage = document.getElementById('visit-message');
+const visitDetail = document.getElementById('visit-detail');
+
+if (previous) {
+  const elapsed = Math.max(0, Date.now() - new Date(previous).getTime());
+  const days = Math.floor(elapsed / 86400000);
+  let ago;
+
+  if (days === 0) ago = 'less than a day ago';
+  else if (days === 1) ago = '1 day ago';
+  else if (days < 30) ago = days + ' days ago';
+  else if (days < 365) ago = Math.floor(days / 30) + ' months ago';
+  else ago = Math.floor(days / 365) + ' years ago';
+
+  visitMessage.textContent = 'Your Last Visit: ' + ago;
+  visitDetail.textContent = 'Welcome back! This estimate is stored in this browser on this device.';
+} else {
+  visitMessage.textContent = 'This looks like your first recorded visit on this browser!';
+  visitDetail.textContent = 'Your last-visit history is stored locally on this device; it does not follow you across browsers or devices.';
+}
+
+const occupation = document.getElementById('occupation');
+const conditionalFields = {
+  'Student': 'study-field',
+  'Employed / Job': 'job-field',
+  'Business Owner': 'business-field'
+};
+
+function occupationFields() {
+  Object.values(conditionalFields).forEach(id => {
+    document.getElementById(id).classList.add('hidden');
+  });
+
+  const fieldId = conditionalFields[occupation.value];
+  if (fieldId) document.getElementById(fieldId).classList.remove('hidden');
+}
+
+occupation.addEventListener('change', occupationFields);
+
+document.getElementById('visitor-form').addEventListener('submit', () => {
+  document.getElementById('form-status').textContent =
+    'Opening the form submission service… If this is the first submission, the site owner may need to confirm the email address.';
+});
 </script>
 </body>
 </html>
