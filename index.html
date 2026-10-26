@@ -1,512 +1,754 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#152b43">
-<meta name="description" content="The personal website of Easin Arafat Nobin.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Easin Arafat Nobin - Personal Website">
 <title>Easin Arafat Nobin | Personal Website</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --ink: #172b3b;
-  --glass: rgba(255,255,255,.17);
-  --line: rgba(255,255,255,.42);
-  --shadow: 0 22px 65px rgba(8,24,39,.22);
-  --bg-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=3840&q=100');
+  --glass: rgba(255,255,255,.14);
+  --border: rgba(255,255,255,.28);
+  --background: linear-gradient(135deg,#020617,#172554,#312e81);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: 'DM Sans', sans-serif;
-  color: white;
   min-height: 100vh;
-  background: #142b3b;
-  overflow-x: hidden;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: white;
+  background: #10172b;
+  line-height: 1.6;
 }
-body:before {
+
+body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-image: var(--bg-image);
+  background-image: var(--background);
   background-size: cover;
   background-position: center;
-  transform: scale(1.025);
-  transition: background-image .65s ease, filter .65s ease;
 }
-body:after {
+
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(130deg,rgba(12,31,48,.30),rgba(12,31,48,.08) 55%,rgba(7,18,32,.38));
-  backdrop-filter: blur(1.2px);
+  background: rgba(0,0,0,.30);
   pointer-events: none;
 }
+
 body[data-period="morning"] {
-  --bg-image: url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=3840&q=100');
+  --background: linear-gradient(135deg,#f6d365,#fda085,#8ec5fc);
 }
+
 body[data-period="afternoon"] {
-  --bg-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=3840&q=100');
+  --background: linear-gradient(135deg,#ffffff,#dbeafe,#bfdbfe);
+  color: #111827;
 }
+
 body[data-period="evening"] {
-  --bg-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=3840&q=100');
+  --background: linear-gradient(135deg,#42275a,#734b6d,#f7797d);
 }
+
 body[data-period="night"] {
-  --bg-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?auto=format&fit=crop&w=3840&q=100');
+  --background: linear-gradient(135deg,#020617,#172554,#312e81);
 }
-.page { width: min(1120px,92%); margin: auto; padding: 34px 0 30px; }
-.glass {
-  background: var(--glass);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(19px) saturate(135%);
-  -webkit-backdrop-filter: blur(19px) saturate(135%);
-  border-radius: 28px;
+
+body[data-period="afternoon"]::after {
+  background: rgba(255,255,255,.15);
 }
-.hero { text-align: center; padding: clamp(28px,5vw,58px) 18px 36px; }
-.eyebrow {
-  letter-spacing: .08em;
-  font-size: clamp(2rem,6vw,4rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 3px 18px rgba(4,18,30,.9);
-  line-height: 1.2;
-}
-.hero h1 {
-  font-family: 'Playfair Display',serif;
-  font-size: clamp(2rem,5.8vw,4.2rem);
-  line-height: 1.12;
-  margin: 16px 0 12px;
-  text-shadow: 0 6px 25px #102b3b;
-}
-.clock {
-  font-size: clamp(2.7rem,8vw,5.2rem);
-  font-weight: 800;
-  letter-spacing: .04em;
-  line-height: 1.05;
-  text-shadow: 0 6px 25px #102b3b;
-}
-.weekday {
-  font-family: 'Playfair Display',serif;
-  font-style: italic;
-  font-size: clamp(1.3rem,3vw,2rem);
-  margin-top: 9px;
-}
-.date { font-weight: 800; letter-spacing: .17em; font-size: clamp(.8rem,2vw,1.05rem); margin-top: 8px; }
-.section-title {
-  text-align: center;
-  font-family: 'Playfair Display',serif;
-  font-size: clamp(1.65rem,3.6vw,2.5rem);
-  margin: 42px 0 18px;
-  text-shadow: 0 4px 18px #122b3b;
-}
-.periods { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
-.period-btn {
-  color: #fff;
-  min-height: 120px;
-  padding: 18px 10px;
-  cursor: pointer;
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,.48);
-  background: rgba(255,255,255,.13);
-  box-shadow: 0 12px 28px rgba(6,20,35,.15),inset 0 1px 0 rgba(255,255,255,.28);
-  backdrop-filter: blur(16px);
-  transition: transform .25s,background .25s,border-color .25s;
-}
-.period-btn:hover,.period-btn.active { transform: translateY(-4px); background: rgba(255,255,255,.28); border-color: #fff; }
-.period-btn .icon { display: block; font-size: 2rem; margin-bottom: 9px; }
-.period-btn strong { display: block; letter-spacing: .08em; font-size: .94rem; }
-.period-btn small { display: block; margin-top: 7px; font-size: .72rem; opacity: .88; }
-.profile-entry {
-  margin-top: 18px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-.profile-entry h2 { font-family: 'Playfair Display',serif; margin: 0 0 7px; font-size: 1.65rem; }
-.profile-entry p { margin: 0; line-height: 1.6; color: #f0f7fb; }
-.actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 9px;
-  text-decoration: none;
-  color: white;
-  font: 700 .92rem 'DM Sans',sans-serif;
-  padding: 13px 19px;
-  border-radius: 15px;
-  border: 1px solid rgba(255,255,255,.58);
-  background: rgba(255,255,255,.16);
-  backdrop-filter: blur(12px);
-  cursor: pointer;
-  transition: transform .2s,background .2s;
-}
-.btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.28); }
-.btn.primary { background: rgba(15,42,63,.55); }
-.panel { margin-top: 22px; padding: clamp(22px,4vw,38px); display: none; animation: rise .35s ease; }
-.panel.show { display: block; }
-@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.panel-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; flex-wrap: wrap; }
-.panel h2,.panel h3 { font-family: 'Playfair Display',serif; margin: 0 0 10px; }
-.panel h2 { font-size: clamp(1.8rem,4vw,2.6rem); }
-.panel p { line-height: 1.75; }
-.muted { color: #f0f6fa; }
-.profile-grid,.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; margin-top: 22px; }
-.info,.skill { padding: 18px; border: 1px solid rgba(255,255,255,.24); border-radius: 18px; background: rgba(255,255,255,.10); }
-.info span { display: block; font-size: .73rem; letter-spacing: .13em; font-weight: 800; opacity: .82; margin-bottom: 8px; }
-.info strong { line-height: 1.6; overflow-wrap: anywhere; }
-.skill { display: flex; align-items: center; gap: 12px; font-weight: 700; }
-.skill .sicon { font-size: 1.5rem; }
-.subhead { margin-top: 34px!important; }
-.social-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-.social {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 62px; padding: 13px; border-radius: 16px; text-decoration: none;
-  color: #fff; background: rgba(255,255,255,.13);
-  border: 1px solid rgba(255,255,255,.32); font-weight: 800;
-  letter-spacing: .04em; transition: transform .2s,background .2s;
-}
-.social:hover { transform: translateY(-3px); background: rgba(255,255,255,.27); }
-.social .sicon { font-size: 1.3rem; }
-.social.youtube,.social.email { grid-column: 1/-1; }
-.visit-card { text-align: center; padding: 28px 18px; }
-.visit-card h2 { font-family: 'Playfair Display',serif; font-size: clamp(1.7rem,4vw,2.5rem); margin: 0 0 8px; }
-.visit-card p { margin: 8px 0; line-height: 1.7; }
-.form { margin-top: 18px; }
-.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px; }
-label { display: block; font-weight: 700; font-size: .88rem; margin-bottom: 7px; }
-input,select,textarea {
-  width: 100%; padding: 13px 14px; border: 1px solid rgba(255,255,255,.42);
-  border-radius: 12px; background: rgba(255,255,255,.91); color: #172b3b;
-  font: 500 .95rem 'DM Sans',sans-serif;
-}
-textarea { min-height: 110px; resize: vertical; }
-.full { grid-column: 1/-1; }
-.form-note { font-size: .82rem; color: #f0f6fa; }
-.status { min-height: 24px; font-weight: 700; }
-.business { margin-top: 22px; padding: 26px; text-align: center; }
-.business h2 { font-family: 'Playfair Display',serif; font-size: 1.8rem; margin: 0 0 8px; }
-.business p { line-height: 1.7; }
-.business .btn { margin: 5px; }
-.footer { text-align: center; margin: 35px 0 8px; padding: 26px 16px; font-weight: 800; letter-spacing: .03em; line-height: 1.7; }
-.footer small { display: block; font-weight: 500; letter-spacing: 0; opacity: .85; margin-top: 9px; }
-.hidden { display: none!important; }
 
 body[data-period="afternoon"] .page,
-body[data-period="afternoon"] .page * { color: #000!important; text-shadow: none!important; }
-body[data-period="afternoon"] .glass,
-body[data-period="afternoon"] .period-btn,
-body[data-period="afternoon"] .btn,
-body[data-period="afternoon"] .social { border-color: rgba(0,0,0,.25); }
-body[data-period="afternoon"] .btn.primary { background: rgba(255,255,255,.48); }
-body[data-period="afternoon"] .period-btn:hover,
-body[data-period="afternoon"] .period-btn.active { background: rgba(255,255,255,.48); border-color: #000; }
-
-@media(max-width:680px) {
-  .page { width: 93%; padding-top: 16px; }
-  .periods { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
-  .period-btn { min-height: 108px; }
-  .profile-grid,.skill-grid,.form-grid { grid-template-columns: 1fr; }
-  .social-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .profile-entry { padding: 20px; }
-  .panel { border-radius: 22px; }
-  .hero { border-radius: 24px; }
-  .full { grid-column: auto; }
+body[data-period="afternoon"] .page * {
+  color: #111827;
 }
-@media(prefers-reduced-motion:reduce) {
-  *,*:before,*:after { scroll-behavior: auto!important; transition: none!important; animation: none!important; }
+
+body[data-period="afternoon"] .glass,
+body[data-period="afternoon"] .time-button,
+body[data-period="afternoon"] input,
+body[data-period="afternoon"] select,
+body[data-period="afternoon"] textarea {
+  background-color: rgba(255,255,255,.76);
+  border-color: rgba(17,24,39,.25);
+}
+
+.page {
+  width: min(1050px, calc(100% - 30px));
+  margin: auto;
+  padding: 25px 0 35px;
+}
+
+.hero {
+  text-align: center;
+  padding: 25px 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 6px 15px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--glass);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin: 18px 0 5px;
+  font-size: clamp(36px,7vw,72px);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.hero-subtitle {
+  font-size: 19px;
+  opacity: .9;
+}
+
+.clock-card {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: 15px;
+  padding: 14px 25px;
+  min-width: 230px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+}
+
+#clock {
+  font-size: 32px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+#date {
+  font-size: 14px;
+}
+
+.time-picker {
+  text-align: center;
+  margin: 25px auto 35px;
+}
+
+.time-heading {
+  margin: 0 0 22px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.time-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.time-button {
+  min-width: 135px;
+  padding: 13px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--glass);
+  color: inherit;
+  font-size: 16px;
+  font-weight: 750;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: .25s;
+}
+
+.time-button:hover {
+  transform: translateY(-4px);
+}
+
+.time-button[aria-pressed="true"] {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.glass {
+  margin: 23px 0;
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 45px rgba(0,0,0,.18);
+}
+
+.section-heading {
+  margin: 0 0 18px;
+  font-size: 27px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 13px;
+}
+
+.info-item {
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: rgba(0,0,0,.06);
+  overflow-wrap: anywhere;
+}
+
+.info-label {
+  display: block;
+  font-size: 12px;
+  opacity: .8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.info-value {
+  font-weight: 700;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--glass);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.business-panel {
+  display: none;
+}
+
+.business-panel.open {
+  display: block;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+  padding: 0;
+  list-style: none;
+}
+
+.skills li {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--glass);
+}
+
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 13px;
+}
+
+.social-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 52px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--glass);
+  color: inherit;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: .2s;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-weight: 700;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,.12);
+  color: inherit;
+  font: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  color: currentColor;
+  opacity: .65;
+}
+
+select option {
+  color: #111827;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 17px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  color: #111827;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.form-note {
+  font-size: 13px;
+}
+
+.footer {
+  padding: 30px 10px;
+  text-align: center;
+  font-size: clamp(20px,3vw,27px);
+  font-weight: 800;
+}
+
+@media (max-width:600px) {
+  .page {
+    width: calc(100% - 20px);
+    padding-top: 12px;
+  }
+
+  .time-buttons {
+    gap: 14px;
+  }
+
+  .time-button {
+    min-width: 0;
+    flex: 1 1 40%;
+  }
+
+  .profile-grid,
+  .form-grid,
+  .social-links {
+    grid-template-columns: 1fr;
+  }
+
+  .full,
+  .field.full {
+    grid-column: auto;
+  }
+
+  .glass {
+    padding: 19px;
+  }
+
+  .section-heading {
+    font-size: 23px;
+  }
 }
 </style>
 </head>
 
-<body data-period="morning">
-<div class="page">
+<body data-period="night">
+<main class="page">
 
-<header class="hero glass">
-  <div class="eyebrow">Welcome to my website</div>
-  <h1>Easin Arafat Nobin</h1>
-  <div class="clock" id="clock">--:--:--</div>
-  <div class="weekday" id="weekday">Loading day…</div>
-  <div class="date" id="date">LOADING DATE</div>
+<header class="hero">
+  <span class="eyebrow">PERSONAL WEBSITE</span>
+  <h1>Welcome to My Website</h1>
+  <p class="hero-subtitle">Easin Arafat Nobin</p>
+
+  <div class="clock-card" aria-live="polite">
+    <div id="clock">00:00:00</div>
+    <div id="date">Loading date...</div>
+  </div>
 </header>
 
-<section aria-label="Choose a time-of-day background">
-  <div class="periods" role="group" aria-label="Choose background time">
-    <button class="period-btn active" data-period="morning"><span class="icon">🌅</span><strong>Morning</strong><small>Fresh beginnings</small></button>
-    <button class="period-btn" data-period="afternoon"><span class="icon">☀️</span><strong>Afternoon</strong><small>Bright and clear</small></button>
-    <button class="period-btn" data-period="evening"><span class="icon">🌇</span><strong>Evening</strong><small>Golden-hour calm</small></button>
-    <button class="period-btn" data-period="night"><span class="icon">🌙</span><strong>Night</strong><small>Quiet and peaceful</small></button>
-  </div>
+<section class="time-picker">
+  <p class="time-heading">CHOOSE YOUR TIME</p>
 
-  <div class="profile-entry glass">
-    <div>
-      <h2>Profile Information</h2>
-      <p>My profile details are shown below. Use the business option to open the professional contact interface.</p>
-    </div>
-    <div class="actions">
-      <button class="btn" id="open-business">💼 Business / Professional ↗</button>
-    </div>
+  <div class="time-buttons">
+    <button class="time-button" type="button"
+      data-period-button="morning" aria-pressed="false">Morning</button>
+
+    <button class="time-button" type="button"
+      data-period-button="afternoon" aria-pressed="false">Afternoon</button>
+
+    <button class="time-button" type="button"
+      data-period-button="evening" aria-pressed="false">Evening</button>
+
+    <button class="time-button" type="button"
+      data-period-button="night" aria-pressed="true">Night</button>
   </div>
 </section>
 
-<section class="panel glass show" id="profile-panel">
-  <div class="panel-head">
-    <div>
-      <h2>My Profile</h2>
-      <p class="muted">Welcome to my personal profile.</p>
-    </div>
-  </div>
+<section class="glass" id="profile">
+  <h2 class="section-heading">Profile Information</h2>
+
   <div class="profile-grid">
-    <div class="info"><span>FULL NAME</span><strong>Easin Arafat Nobin</strong></div>
-    <div class="info"><span>POSITION</span><strong>Web Developer &amp; Designer</strong></div>
-    <div class="info"><span>EDUCATION</span><strong>HSC First Year — Science</strong></div>
-    <div class="info"><span>SCHOOL &amp; COLLEGE</span><strong>Sene Public School and College</strong></div>
-    <div class="info"><span>LOCATION</span><strong>Savar, Dhaka, Bangladesh</strong></div>
-  </div>
-  <div class="actions" style="margin-top:22px">
-    <button class="btn" id="profile-business">💼 Business / Professional</button>
-    <a class="btn" href="mailto:easinarafatnobin@gmail.com">✉ Contact Me</a>
-  </div>
-</section>
-
-<section class="panel glass" id="business-panel">
-  <div class="panel-head">
-    <div>
-      <h2>Business / Professional</h2>
-      <p class="muted">For companies, industry professionals, collaborations, and project opportunities.</p>
+    <div class="info-item">
+      <span class="info-label">Full Name</span>
+      <span class="info-value">Easin Arafat Nobin</span>
     </div>
-    <button class="btn" data-close="business-panel">✕ Close</button>
-  </div>
-  <div class="info">
-    <span>PROFESSIONAL CONTACT EMAIL</span>
-    <strong>easinarafatnobin@gmail.com</strong>
-  </div>
-  <p class="muted">For professional inquiries, project discussions, or collaboration proposals, please use the email button below.</p>
-  <a class="btn primary" href="mailto:easinarafatnobin@gmail.com?subject=Business%20or%20Professional%20Inquiry">✉ Email for Business Inquiries</a>
-</section>
 
-<section>
-  <h2 class="section-title">Current Activities &amp; Skills</h2>
-  <div class="skill-grid">
-    <div class="skill glass"><span class="sicon">🎓</span>HSC First Year Student</div>
-    <div class="skill glass"><span class="sicon">💻</span>Web Development</div>
-    <div class="skill glass"><span class="sicon">🎨</span>Web Design</div>
-    <div class="skill glass"><span class="sicon">🤖</span>Artificial Intelligence (AI)</div>
-    <div class="skill glass"><span class="sicon">🚀</span>Freelancing Skills</div>
-    <div class="skill glass"><span class="sicon">📷</span>Photography</div>
-  </div>
-</section>
+    <div class="info-item">
+      <span class="info-label">Position</span>
+      <span class="info-value">Web Developer &amp; Designer (Learning)</span>
+    </div>
 
-<section>
-  <h2 class="section-title">Find Me on Social Media</h2>
-  <div class="social-grid">
-    <a class="social youtube" href="https://www.youtube.com/channel/UC3JZ8l1McxdjTlYLFBgOq7A" target="_blank" rel="noopener noreferrer"><span class="sicon">▶️</span>YouTube</a>
-    <a class="social" href="https://www.facebook.com/share/1GFWyCmwfA/" target="_blank" rel="noopener noreferrer"><span class="sicon">📘</span>Facebook</a>
-    <a class="social" href="https://www.tiktok.com/@easin.arafat.nobin" target="_blank" rel="noopener noreferrer"><span class="sicon">♪</span>TikTok</a>
-    <a class="social" href="https://www.instagram.com/_nobin_official_/" target="_blank" rel="noopener noreferrer"><span class="sicon">📸</span>Instagram</a>
-    <a class="social" href="https://www.threads.com/@_nobin_official_" target="_blank" rel="noopener noreferrer"><span class="sicon">＠</span>Threads</a>
-    <a class="social email" href="mailto:easinarafatnobin@gmail.com"><span class="sicon">✉️</span>Email Me</a>
+    <div class="info-item">
+      <span class="info-label">Education</span>
+      <span class="info-value">HSC First Year — Science</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">Institution</span>
+      <span class="info-value">Sene Public School and College</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">Location</span>
+      <span class="info-value">Savar, Dhaka, Bangladesh</span>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="action-button" id="business-toggle"
+      type="button" aria-expanded="false">
+      Business / Professional
+    </button>
   </div>
 </section>
 
-<section class="visit-card glass">
-  <h2>Welcome Back!</h2>
-  <p id="visit-message">Thank you for visiting my website.</p>
-  <p class="muted" id="visit-detail">Your visit history is saved only in this browser on this device.</p>
+<section class="glass business-panel" id="business-panel">
+  <h2 class="section-heading">Business / Professional</h2>
+  <p>For business, collaboration, web design and professional inquiries, contact me by email.</p>
+  <p>
+    <strong>Email:</strong>
+    <a href="mailto:easinarafatnobin@gmail.com">
+      easinarafatnobin@gmail.com
+    </a>
+  </p>
+  <a class="action-button"
+    href="mailto:easinarafatnobin@gmail.com?subject=Business%20Inquiry">
+    Send a Business Email
+  </a>
 </section>
 
-<section class="panel glass show" id="visitor-form-panel">
-  <h2>Visitor Information Form</h2>
-  <p class="muted">You can share a little information and leave a message. Submitted information will be sent to the website owner.</p>
+<section class="glass">
+  <h2 class="section-heading">Current Activities &amp; Skills</h2>
 
-  <form class="form" id="visitor-form" action="https://formsubmit.co/easinarafatnobin2@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="New Visitor Information — Easin Arafat Nobin Website">
+  <ul class="skills">
+    <li>HSC First Year Student</li>
+    <li>Web Development</li>
+    <li>Web Design</li>
+    <li>Artificial Intelligence</li>
+    <li>Freelancing Skills</li>
+    <li>Photography</li>
+  </ul>
+</section>
+
+<section class="glass">
+  <h2 class="section-heading">Connect With Me</h2>
+
+  <div class="social-links">
+    <a class="social-link full"
+      href="https://www.youtube.com/channel/UC3JZ8l1McxdjTlYLFBgOq7A"
+      target="_blank" rel="noopener noreferrer">▶ YouTube</a>
+
+    <a class="social-link"
+      href="https://www.facebook.com/share/1GFWyCmwfA/"
+      target="_blank" rel="noopener noreferrer">Facebook</a>
+
+    <a class="social-link"
+      href="https://www.tiktok.com/@easin.arafat.nobin"
+      target="_blank" rel="noopener noreferrer">TikTok</a>
+
+    <a class="social-link"
+      href="https://www.instagram.com/_nobin_official_/"
+      target="_blank" rel="noopener noreferrer">Instagram</a>
+
+    <a class="social-link"
+      href="https://www.threads.com/@_nobin_official_"
+      target="_blank" rel="noopener noreferrer">Threads</a>
+
+    <a class="social-link full"
+      href="mailto:easinarafatnobin@gmail.com?subject=Hello%20Easin">
+      ✉ Email Me
+    </a>
+  </div>
+
+  <p class="form-note">
+    If Email Me does not open, set an email app or email handler as the default on your device.
+  </p>
+</section>
+
+<section class="glass">
+  <h2 class="section-heading">Welcome Back</h2>
+  <p id="last-visit">Welcome to my website!</p>
+</section>
+
+<section class="glass">
+  <h2 class="section-heading">Visitor Information Form</h2>
+
+  <p>Please fill in this form if you would like to share information about yourself.</p>
+
+  <form action="https://formsubmit.co/easinarafatnobin2@gmail.com"
+    method="POST">
+
+    <input type="hidden" name="_subject"
+      value="New Visitor Information - Easin Arafat Nobin Website">
+
     <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="true">
-    <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
 
     <div class="form-grid">
-      <div><label for="visitor-name">Your Name *</label><input id="visitor-name" name="Name" autocomplete="name" required maxlength="100" placeholder="Enter your name"></div>
-      <div><label for="visitor-age">Your Age</label><input id="visitor-age" name="Age" type="number" min="1" max="120" placeholder="Enter your age"></div>
-      <div><label for="visitor-country">Country</label><input id="visitor-country" name="Country" autocomplete="country-name" maxlength="100" placeholder="Your country"></div>
-      <div><label for="visitor-region">Region / City</label><input id="visitor-region" name="Region or City" maxlength="120" placeholder="Your region or city"></div>
+      <div class="field">
+        <label for="visitor-name">Name *</label>
+        <input id="visitor-name" name="Name" type="text"
+          placeholder="Enter your name" autocomplete="name" required>
+      </div>
 
-      <div class="full">
-        <label for="occupation">Occupation</label>
-        <select id="occupation" name="Occupation">
-          <option value="">Choose an option</option>
+      <div class="field">
+        <label for="visitor-age">Age</label>
+        <input id="visitor-age" name="Age" type="number"
+          min="1" max="120" placeholder="Enter your age">
+      </div>
+
+      <div class="field">
+        <label for="visitor-country">Country *</label>
+        <input id="visitor-country" name="Country" type="text"
+          placeholder="Enter your country" required>
+      </div>
+
+      <div class="field">
+        <label for="visitor-city">Region / City</label>
+        <input id="visitor-city" name="Region or City" type="text"
+          placeholder="Enter your region or city">
+      </div>
+
+      <div class="field">
+        <label for="visitor-occupation">Occupation *</label>
+        <select id="visitor-occupation" name="Occupation" required>
+          <option value="">Choose your occupation</option>
           <option>Student</option>
-          <option>Employed / Job</option>
+          <option>Employed</option>
           <option>Business Owner</option>
-          <option>Unemployed / No Job</option>
+          <option>Freelancer</option>
           <option>Other</option>
         </select>
       </div>
 
-      <div id="study-field" class="full hidden"><label for="study">What are you studying?</label><input id="study" name="What are you studying?" maxlength="150" placeholder="Your subject or course"></div>
-      <div id="job-field" class="full hidden"><label for="job">What is your job / professional field?</label><input id="job" name="Job or Professional Field" maxlength="150" placeholder="Your job or field"></div>
-      <div id="business-field" class="full hidden"><label for="business-type">What type of business do you run?</label><input id="business-type" name="Business Type" maxlength="150" placeholder="Your business type"></div>
-      <div class="full"><label for="comments">Comments / Message</label><textarea id="comments" name="Comments or Message" maxlength="1500" placeholder="Write your message here (optional)"></textarea></div>
+      <div class="field" id="study-field" hidden>
+        <label for="visitor-study">What are you studying?</label>
+        <input id="visitor-study" name="What are you studying?"
+          type="text" placeholder="Your subject or course">
+      </div>
 
-      <div class="full">
-        <button class="btn primary" type="submit">Send Visitor Information ↗</button>
-        <p class="form-note">Please share only information you are comfortable providing. Your information will be sent to the website owner's visitor-information email. The first submission may require email confirmation by the owner.</p>
-        <p class="status" id="form-status" aria-live="polite"></p>
+      <div class="field" id="job-field" hidden>
+        <label for="visitor-job">Job / Professional Field</label>
+        <input id="visitor-job" name="Job or Professional Field"
+          type="text" placeholder="Your job or field">
+      </div>
+
+      <div class="field" id="business-field" hidden>
+        <label for="visitor-business">Business Type</label>
+        <input id="visitor-business" name="Business Type"
+          type="text" placeholder="Your business type">
+      </div>
+
+      <div class="field full">
+        <label for="visitor-message">Comments / Message</label>
+        <textarea id="visitor-message" name="Comments or Message"
+          placeholder="Write your message (optional)"></textarea>
       </div>
     </div>
+
+    <button class="submit-button" type="submit">
+      Submit Information
+    </button>
+
+    <p class="form-note">
+      Please do not enter passwords or sensitive personal information.
+    </p>
   </form>
 </section>
 
-<section class="business glass">
-  <h2>Contact Me</h2>
-  <p>For a direct message or professional opportunity, contact me through my main email address.</p>
-  <a class="btn primary" href="mailto:easinarafatnobin@gmail.com?subject=Message%20from%20Your%20Website">✉ Send Me a Message</a>
-  <a class="btn" href="mailto:easinarafatnobin@gmail.com?subject=Business%20or%20Professional%20Inquiry">💼 Business Inquiry</a>
-</section>
-
-<footer class="footer glass">
+<footer class="footer">
   Thank You So Much for Visiting My Website!
-  <small>Made with care by Easin Arafat Nobin</small>
 </footer>
 
-</div>
+</main>
 
 <script>
-const periods = ['morning','afternoon','evening','night'];
+const periodButtons = document.querySelectorAll("[data-period-button]");
 
-function periodForHour(hour) {
-  if (hour >= 6 && hour < 12) return 'morning';
-  if (hour >= 12 && hour < 18) return 'afternoon';
-  if (hour >= 18 && hour < 21) return 'evening';
-  return 'night';
-}
-
-function updateClock() {
-  const now = new Date();
-  document.getElementById('clock').textContent =
-    now.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-  document.getElementById('weekday').textContent =
-    now.toLocaleDateString(undefined, { weekday: 'long' });
-  document.getElementById('date').textContent =
-    now.toLocaleDateString(undefined, {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    }).toUpperCase();
-}
-
-function selectPeriod(period) {
-  if (!periods.includes(period)) return;
+function setPeriod(period) {
   document.body.dataset.period = period;
-  document.querySelectorAll('.period-btn').forEach(button => {
-    button.classList.toggle('active', button.dataset.period === period);
+
+  periodButtons.forEach(button => {
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.periodButton === period)
+    );
   });
+
   try {
-    localStorage.setItem('nobin-selected-period', period);
+    localStorage.setItem("easinWebsitePeriod", period);
   } catch (error) {}
 }
 
-document.querySelectorAll('.period-btn').forEach(button => {
-  button.addEventListener('click', () => selectPeriod(button.dataset.period));
-});
-
-function showPanel(id) {
-  if (id === 'business-panel') {
-    document.getElementById(id).classList.add('show');
-    document.getElementById(id).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-}
-
-document.getElementById('open-business').addEventListener('click', () => showPanel('business-panel'));
-document.getElementById('profile-business').addEventListener('click', () => showPanel('business-panel'));
-
-document.querySelectorAll('[data-close]').forEach(button => {
-  button.addEventListener('click', () => {
-    if (button.dataset.close === 'business-panel') {
-      document.getElementById(button.dataset.close).classList.remove('show');
-    }
+periodButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    setPeriod(button.dataset.periodButton);
   });
 });
+
+function updateClock() {
+  const now = new Date();
+
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true
+    });
+
+  document.getElementById("date").textContent =
+    now.toLocaleDateString(undefined, {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+}
 
 updateClock();
 setInterval(updateClock, 1000);
 
-try {
-  const saved = localStorage.getItem('nobin-selected-period');
-  selectPeriod(saved && periods.includes(saved) ? saved : periodForHour(new Date().getHours()));
-} catch (error) {
-  selectPeriod(periodForHour(new Date().getHours()));
-}
+const businessToggle = document.getElementById("business-toggle");
+const businessPanel = document.getElementById("business-panel");
 
-const visitKey = 'nobin-last-visit-v1';
-let previous = null;
+businessToggle.addEventListener("click", () => {
+  const open = businessPanel.classList.toggle("open");
 
-try {
-  previous = localStorage.getItem(visitKey);
-  localStorage.setItem(visitKey, new Date().toISOString());
-} catch (error) {}
+  businessToggle.setAttribute("aria-expanded", String(open));
 
-const visitMessage = document.getElementById('visit-message');
-const visitDetail = document.getElementById('visit-detail');
+  businessToggle.textContent = open
+    ? "Hide Business / Professional"
+    : "Business / Professional";
 
-if (previous) {
-  const elapsed = Math.max(0, Date.now() - new Date(previous).getTime());
-  const days = Math.floor(elapsed / 86400000);
-  let ago;
+  if (open) {
+    businessPanel.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  }
+});
 
-  if (days === 0) ago = 'less than a day ago';
-  else if (days === 1) ago = '1 day ago';
-  else if (days < 30) ago = days + ' days ago';
-  else if (days < 365) ago = Math.floor(days / 30) + ' months ago';
-  else ago = Math.floor(days / 365) + ' years ago';
+const occupation = document.getElementById("visitor-occupation");
 
-  visitMessage.textContent = 'Your Last Visit: ' + ago;
-  visitDetail.textContent = 'Welcome back! This estimate is stored in this browser on this device.';
-} else {
-  visitMessage.textContent = 'This looks like your first recorded visit on this browser!';
-  visitDetail.textContent = 'Your last-visit history is stored locally on this device; it does not follow you across browsers or devices.';
-}
-
-const occupation = document.getElementById('occupation');
 const conditionalFields = {
-  'Student': 'study-field',
-  'Employed / Job': 'job-field',
-  'Business Owner': 'business-field'
+  Student: document.getElementById("study-field"),
+  Employed: document.getElementById("job-field"),
+  "Business Owner": document.getElementById("business-field")
 };
 
-function occupationFields() {
-  Object.values(conditionalFields).forEach(id => {
-    document.getElementById(id).classList.add('hidden');
+occupation.addEventListener("change", () => {
+  Object.entries(conditionalFields).forEach(([type, field]) => {
+    const show = occupation.value === type;
+
+    field.hidden = !show;
+
+    const input = field.querySelector("input");
+    input.required = show;
+
+    if (!show) input.value = "";
   });
-
-  const fieldId = conditionalFields[occupation.value];
-  if (fieldId) document.getElementById(fieldId).classList.remove('hidden');
-}
-
-occupation.addEventListener('change', occupationFields);
-
-document.getElementById('visitor-form').addEventListener('submit', () => {
-  document.getElementById('form-status').textContent =
-    'Opening the form submission service… If this is the first submission, the site owner may need to confirm the email address.';
 });
+
+try {
+  const previousVisit = localStorage.getItem("easinWebsiteLastVisit");
+  const visitText = document.getElementById("last-visit");
+
+  if (previousVisit) {
+    visitText.textContent =
+      "Your previous visit on this browser was " +
+      new Date(previousVisit).toLocaleString() + ".";
+  } else {
+    visitText.textContent =
+      "Welcome! This appears to be your first visit on this browser.";
+  }
+
+  localStorage.setItem(
+    "easinWebsiteLastVisit",
+    new Date().toISOString()
+  );
+
+  const savedPeriod = localStorage.getItem("easinWebsitePeriod");
+
+  if (["morning", "afternoon", "evening", "night"].includes(savedPeriod)) {
+    setPeriod(savedPeriod);
+  }
+} catch (error) {
+  document.getElementById("last-visit").textContent =
+    "Welcome to my website!";
+}
 </script>
+
 </body>
 </html>
